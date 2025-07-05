@@ -16,7 +16,6 @@ namespace xo {
     using xo::reflect::Reflect;
     using xo::reflect::TaggedPtr;
     using xo::reflect::TypeDescr;
-    using xo::ref::brw;
     using xo::print::quot;
     using xo::print::qcstr;
     using xo::scope;
@@ -48,7 +47,7 @@ namespace xo {
             virtual std::string const & name() const override { return name_; }
             virtual void set_name(std::string const & x) override { this->name_ = x; }
             /* 0 consumers for websocket sink,  since it's not a source */
-            virtual void visit_direct_consumers(std::function<void (brw<AbstractEventProcessor>)> const &) override {}
+            virtual void visit_direct_consumers(std::function<void (bp<AbstractEventProcessor>)> const &) override {}
             virtual void display(std::ostream & os) const override;
 
             virtual bool allow_polymorphic_source() const override { return true; }
