@@ -659,25 +659,34 @@ namespace xo {
                 /* see lws-context-vhost.h for lws_http_mount */
 
                 *p_mount = {
-                    /* .mount_next */         NULL,       /* linked-list "next" */
-                    /* .mountpoint */         "/dyn",         /* mountpoint URL */
-                    /* .origin */             NULL,   /* protocol */
-                    /* .def */            NULL,
-                    /* .protocol */       "http",
-                    /* .cgienv */             NULL,
-                    /* .extra_mimetypes */    NULL,
-                    /* .interpret */      NULL,
-                    /* .cgi_timeout */        0,
-                    /* .cache_max_age */      0,
-                    /* .auth_mask */      0,
-                    /* .cache_reusable */         0,
-                    /* .cache_revalidate */   0,
-                    /* .cache_intermediaries */   0,
-                    /* .origin_protocol */    LWSMPRO_CALLBACK, /* dynamic */
-                    /* .mountpoint_len */         4,      /* char count */
-                    /* .basic_auth_login_file */  NULL,
+                    .mount_next            = NULL,
+                    .mountpoint            = "/dyn",
+                    .origin                = NULL,
+                    .def                   = NULL,
+                    .protocol              = "http",
+                    .cgienv                = NULL,
+                    .extra_mimetypes       = NULL,
+                    .interpret             = NULL,
+                    .cgi_timeout           = 0,
+                    .cache_max_age         = 0,
+                    .auth_mask             = 0,
+                    .cache_reusable        = 0,
+                    .cache_revalidate      = 0,
+                    .cache_intermediaries  = 0,
+#                  if (LWS_LIBRARY_VERSION_MAJOR > 4 || ((LWS_LIBRARY_VERSION_MAJOR == 4) && (LWS_LIBRARY_VERSION_MINOR >= 4)))
+                    .cache_no              = 0,
+#                  endif
+                    .origin_protocol       = LWSMPRO_CALLBACK, /* dynamic */
+                    .mountpoint_len        = 4,
+                    .basic_auth_login_file = NULL,
 #                  if ((LWS_LIBRARY_VERSION_MAJOR < 4) || ((LWS_LIBRARY_VERSION_MAJOR == 4) && (LWS_LIBRARY_VERSION_MINOR < 3)))
-                    /* ._unused[] */ { nullptr, nullptr },
+                    ._unused               = { nullptr, nullptr },
+#                  endif
+#                  if (LWS_LIBRARY_VERSION_MAJOR > 4 || ((LWS_LIBRARY_VERSION_MAJOR == 4) && (LWS_LIBRARY_VERSION_MINOR >= 4)))
+                    .cgi_chroot_path       = NULL,
+                    .cgi_wd                = NULL,
+                    .headers               = NULL,
+                    .keepalive_timeout     = 0,
 #                  endif
                 };
             } /*init_mount_dynamic*/
@@ -686,25 +695,34 @@ namespace xo {
                                    lws_http_mount * p_mount) {
                 /* default mount serves the URL space from ./mount-origin */
                 *p_mount = {
-                    /* .mount_next */             dynamic,    /* linked-list "next" */
-                    /* .mountpoint */         "/",        /* mountpoint URL */
-                    /* .origin */                 "./mount-origin", /* serve from dir */
-                    /* .def */            "index.html",   /* default filename */
-                    /* .protocol */       NULL,
-                    /* .cgienv */             NULL,
-                    /* .extra_mimetypes */    NULL,
-                    /* .interpret */      NULL,
-                    /* .cgi_timeout */        0,
-                    /* .cache_max_age */      0,
-                    /* .auth_mask */      0,
-                    /* .cache_reusable */         0,
-                    /* .cache_revalidate */   0,
-                    /* .cache_intermediaries */   0,
-                    /* .origin_protocol */    LWSMPRO_FILE,   /* files in a dir */
-                    /* .mountpoint_len */         1,      /* char count */
-                    /* .basic_auth_login_file */  NULL,
+                    .mount_next            = dynamic,
+                    .mountpoint            = "/",
+                    .origin                = "./mount-origin",
+                    .def                   = "index.html",
+                    .protocol              = NULL,
+                    .cgienv                = NULL,
+                    .extra_mimetypes       = NULL,
+                    .interpret             = NULL,
+                    .cgi_timeout           = 0,
+                    .cache_max_age         = 0,
+                    .auth_mask             = 0,
+                    .cache_reusable        = 0,
+                    .cache_revalidate      = 0,
+                    .cache_intermediaries  = 0,
+#                  if (LWS_LIBRARY_VERSION_MAJOR > 4 || ((LWS_LIBRARY_VERSION_MAJOR == 4) && (LWS_LIBRARY_VERSION_MINOR >= 4)))
+                    .cache_no              = 0,
+#                  endif
+                    .origin_protocol       = LWSMPRO_FILE,
+                    .mountpoint_len        = 1,
+                    .basic_auth_login_file = NULL,
 #                  if ((LWS_LIBRARY_VERSION_MAJOR < 4) || ((LWS_LIBRARY_VERSION_MAJOR == 4) && (LWS_LIBRARY_VERSION_MINOR < 3)))
-                    /* ._unused[] */ { nullptr, nullptr },
+                    ._unused               = { nullptr, nullptr },
+#                  endif
+#                  if (LWS_LIBRARY_VERSION_MAJOR > 4 || ((LWS_LIBRARY_VERSION_MAJOR == 4) && (LWS_LIBRARY_VERSION_MINOR >= 4)))
+                    .cgi_chroot_path       = NULL,
+                    .cgi_wd                = NULL,
+                    .headers               = NULL,
+                    .keepalive_timeout     = 0,
 #                  endif
                 };
             } /*init_mount_static*/
